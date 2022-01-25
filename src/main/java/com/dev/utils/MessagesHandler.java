@@ -1,12 +1,17 @@
 package com.dev.utils;
 
+import com.dev.Persist;
+import org.json.JSONObject;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 @Component
@@ -14,27 +19,15 @@ public class MessagesHandler extends TextWebSocketHandler {
 
     private static List<WebSocketSession> sessionList = new CopyOnWriteArrayList<>();
     private static int totalSessions;
-
-//    @PostConstruct
-//    public void init () {
-//        new Thread(() -> {
-//            while (true) {
-//                try {
-//                    sendNewNotification();
-//                    Thread.sleep(10000);
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }).start();
-//    }
+    private static Map<String, WebSocketSession> sessionMap = new HashMap<>();
 
 
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         super.afterConnectionEstablished(session);
-//        Map<String, String> map = Utils.splitQuery(session.getUri().getQuery());
+        Map<String, String> map = Utils.splitQuery(session.getUri().getQuery());
+        sessionMap.put(map.get("token"), session);
         sessionList.add(session);
         totalSessions = sessionList.size();
         System.out.println("afterConnectionEstablished");
@@ -52,18 +45,34 @@ public class MessagesHandler extends TextWebSocketHandler {
         System.out.println("afterConnectionClosed");
     }
 
-//    public void sendNewNotification () {
-//        for (WebSocketSession session : sessionList) {
-//            JSONObject jsonObject = new JSONObject();
-//            jsonObject.put("test", "test");
-//            try {
-//                session.sendMessage(new TextMessage(jsonObject.toString()));
-//            } catch (IOException e) {
-//                e.printStackTrace();
+//    public void sendNotification (JSONObject jsonObject, Persist persist, int saleId) {
+//        if (!sessionList.isEmpty()) {
+//            List<String> tokens = persist.getTokens(saleId);
+//            for (Map.Entry<String, WebSocketSession> entry : sessionMap.entrySet()) {
+//                if (tokens.contains(entry.getKey())) {
+//                    try {
+//                        if (entry.getValue().isOpen()) {
+//                            entry.getValue().sendMessage(new TextMessage(jsonObject.toString()));
+//                        }
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
 //            }
 //        }
 //    }
 
-
-
+    public void sendNotificationToAll(JSONObject jsonObject) {
+        if (!sessionList.isEmpty()) {
+            for (Map.Entry<String, WebSocketSession> entry : sessionMap.entrySet()) {
+                try {
+                    if (entry.getValue().isOpen()) {
+                        entry.getValue().sendMessage(new TextMessage(jsonObject.toString()));
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 }

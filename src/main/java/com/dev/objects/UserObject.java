@@ -1,7 +1,8 @@
 package com.dev.objects;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -20,8 +21,19 @@ public class UserObject {
     @Column
     private String token;
 
-    @Transient
-    private List<PostObject> posts;
+    @Column
+    private boolean firstLogin;
+
+    @ManyToMany
+    private Set<OrgObject> organizations = new HashSet<>();
+
+    public void addOrganization(OrgObject o) {
+        organizations.add(o);
+    }
+
+    public void removeOrganization(OrgObject o) {
+        organizations.remove(o);
+    }
 
     public String getUsername() {
         return username;
@@ -47,16 +59,6 @@ public class UserObject {
         this.token = token;
     }
 
-    public void addPost (String post) {
-    }
-
-    public List<PostObject> getPosts() {
-        return posts;
-    }
-
-    public void setPosts(List<PostObject> posts) {
-        this.posts = posts;
-    }
 
     public int getId() {
         return id;
@@ -66,4 +68,19 @@ public class UserObject {
         this.id = id;
     }
 
+    public boolean isFirstLogin() {
+        return firstLogin;
+    }
+
+    public void setFirstLogin(boolean firstLogin) {
+        this.firstLogin = firstLogin;
+    }
+
+    public Set<OrgObject> getOrganizations() {
+        return organizations;
+    }
+
+    public void setOrganizations(Set<OrgObject> organizations) {
+        this.organizations = organizations;
+    }
 }
