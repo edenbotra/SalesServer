@@ -1,6 +1,5 @@
 package com.dev.utils;
 
-import com.dev.Persist;
 import org.json.JSONObject;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
@@ -20,7 +19,6 @@ public class MessagesHandler extends TextWebSocketHandler {
     private static List<WebSocketSession> sessionList = new CopyOnWriteArrayList<>();
     private static int totalSessions;
     private static Map<String, WebSocketSession> sessionMap = new HashMap<>();
-
 
 
     @Override
@@ -45,33 +43,30 @@ public class MessagesHandler extends TextWebSocketHandler {
         System.out.println("afterConnectionClosed");
     }
 
-//    public void sendNotification (JSONObject jsonObject, Persist persist, int saleId) {
-//        if (!sessionList.isEmpty()) {
-//            List<String> tokens = persist.getTokens(saleId);
-//            for (Map.Entry<String, WebSocketSession> entry : sessionMap.entrySet()) {
-//                if (tokens.contains(entry.getKey())) {
-//                    try {
-//                        if (entry.getValue().isOpen()) {
-//                            entry.getValue().sendMessage(new TextMessage(jsonObject.toString()));
-//                        }
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//            }
-//        }
-//    }
-
-    public void sendNotificationToAll(JSONObject jsonObject) {
-        if (!sessionList.isEmpty()) {
-            for (Map.Entry<String, WebSocketSession> entry : sessionMap.entrySet()) {
+    public void sendNotification (JSONObject jsonObject, List<String> usersTokens) {
+        for (Map.Entry<String, WebSocketSession> entry : sessionMap.entrySet()) {
+            if (usersTokens.contains(entry.getKey())) {
                 try {
+                    System.out.println("SENT HERE");
                     if (entry.getValue().isOpen()) {
                         entry.getValue().sendMessage(new TextMessage(jsonObject.toString()));
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+            }
+        }
+    }
+
+    public void sendNotificationToAll(JSONObject jsonObject) {
+        for (Map.Entry<String, WebSocketSession> entry : sessionMap.entrySet()) {
+            try {
+                System.out.println("SENT GLOBALLY");
+                if (entry.getValue().isOpen()) {
+                    entry.getValue().sendMessage(new TextMessage(jsonObject.toString()));
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
     }

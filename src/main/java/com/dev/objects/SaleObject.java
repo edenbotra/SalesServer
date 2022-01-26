@@ -26,6 +26,12 @@ public class SaleObject {
     @Column
     private String description;
 
+    @Column
+    private boolean notifiedStart;
+
+    @Column
+    private boolean notifiedEnd;
+
     @ManyToOne
     @JoinColumn (name = "shopId")
     private ShopObject shop;
@@ -91,19 +97,27 @@ public class SaleObject {
         organizations.remove(org);
     }
 
-    public ShopObject getStore() {
-        return shop;
-    }
-
-    public void setStore(ShopObject shop) {
-        this.shop = shop;
-    }
-
     public ShopObject getShop() {
         return shop;
     }
 
     public void setShop(ShopObject shop) {
         this.shop = shop;
+    }
+
+    public boolean isNotifiedStart() {
+        return notifiedStart;
+    }
+
+    public void setNotifiedStart(boolean notifiedStart) {
+        this.notifiedStart = notifiedStart;
+    }
+
+    public boolean isNotifiedEnd() {
+        return notifiedEnd;
+    }
+
+    public void setNotifiedEnd(boolean notifiedEnd) {
+        this.notifiedEnd = notifiedEnd;
     }
 }

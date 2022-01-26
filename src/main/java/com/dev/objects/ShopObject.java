@@ -14,6 +14,9 @@ public class ShopObject {
     @Column
     private String name;
 
+    @Column
+    private String imgSrc;
+
     public int getId() {
         return id;
     }
@@ -28,5 +31,13 @@ public class ShopObject {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getImgSrc() {
+        return imgSrc;
+    }
+
+    public void setImgSrc(String imgSrc) {
+        this.imgSrc = imgSrc;
     }
 }
