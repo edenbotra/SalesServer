@@ -75,42 +75,42 @@ public class Persist {
 
         ShopObject shop = new ShopObject();
         shop.setName("Pull and Bear");
-        shop.setImgSrc("https://tinyurl.com/2p84ns5a");
+        shop.setImgSrc("http://is.am/4u34");
         session.saveOrUpdate(shop);
 
         shop = new ShopObject();
         shop.setName("Castro");
-        shop.setImgSrc("https://tinyurl.com/4wmv92sy");
+        shop.setImgSrc("http://is.am/4u35");
         session.saveOrUpdate(shop);
 
         shop = new ShopObject();
         shop.setName("Karbitz");
-        shop.setImgSrc("https://tinyurl.com/2p8u4mrn");
+        shop.setImgSrc("http://is.am/4u36");
         session.saveOrUpdate(shop);
 
         shop = new ShopObject();
         shop.setName("Max Stock");
-        shop.setImgSrc("https://tinyurl.com/3us92jpr");
+        shop.setImgSrc("http://is.am/4u37");
         session.saveOrUpdate(shop);
 
         shop = new ShopObject();
         shop.setName("IKEA");
-        shop.setImgSrc("https://tinyurl.com/2ak24ndm");
+        shop.setImgSrc("http://is.am/4u38");
         session.saveOrUpdate(shop);
 
         shop = new ShopObject();
         shop.setName("Fattal");
-        shop.setImgSrc("https://tinyurl.com/yckuckp7");
+        shop.setImgSrc("http://is.am/4u39");
         session.saveOrUpdate(shop);
 
         shop = new ShopObject();
         shop.setName("Mega Sport");
-        shop.setImgSrc("https://tinyurl.com/2e7km39y");
+        shop.setImgSrc("http://is.am/4u3a");
         session.saveOrUpdate(shop);
 
         shop = new ShopObject();
         shop.setName("GUCCI");
-        shop.setImgSrc("https://tinyurl.com/yc55hdax");
+        shop.setImgSrc("http://is.am/4u3b");
         session.saveOrUpdate(shop);
 
 
